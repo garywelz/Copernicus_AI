@@ -48,14 +48,13 @@ export default function Home() {
           </header>
 
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-6">Featured Episodes</h2>
-            {isLoading ? (
-              <LoadingState />
-            ) : error ? (
-              <ErrorState error={error} onRetry={retry} />
-            ) : (
-              <EpisodeList episodes={featuredEpisodes} />
-            )}
+            <h2 className="text-2xl font-semibold mb-6">Latest Episode</h2>
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              {/* Placeholder for latest episode */}
+              <div className="aspect-video bg-gray-200 rounded-lg mb-4">
+                {/* YouTube embed will go here */}
+              </div>
+            </div>
           </section>
 
           <section>
