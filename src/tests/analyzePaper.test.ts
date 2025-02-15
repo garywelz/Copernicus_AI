@@ -1,122 +1,193 @@
 // src/tests/analyzePaper.test.ts
-import { analyzePaperAction } from '../actions/analyzePaper.js';
-import fetch from 'node-fetch';
-import { XMLParser } from 'fast-xml-parser';
-import dotenv from 'dotenv';
-import { IAgentRuntime } from '@elizaos/core';
+import { jest, describe, test, expect, beforeEach } from '@jest/globals';
+import { analyzePaperAction } from '../actions/analyzePaper';
+import { IAgentRuntime, ModelProviderName } from '@elizaos/core';
+import { processPaper } from '../services/paperProcessor';
+import { ResearchPaper, AnalyzeOptions, PaperAnalysis } from '../types/paper';
+import { SpyInstance } from 'jest-mock';
+import { analyzePaper } from '../services/paperAnalyzer';
 
-dotenv.config();
+type CallbackFunction = (response: {
+  success?: boolean;
+  error?: string;
+  analysis?: PaperAnalysis;
+  citation?: string;
+}) => void;
 
-const mockRuntime: Partial<IAgentRuntime> = {
+// Remove the inline mock since we're using the mock module
+// jest.mock('@elizaos/core', () => ({...}));
+
+// Mock paperProcessor
+jest.mock('../services/paperProcessor');
+const mockProcessPaper = jest.fn() as jest.MockedFunction<typeof processPaper>;
+
+describe('analyzePaperAction', () => {
+  const mockApiKey = 'test-api-key';
+  
+  const mockRuntime: Partial<IAgentRuntime> = {
     character: {
-        settings: {
-            secrets: {
-                OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY
-            }
-        }
+      name: 'MockAgent',
+      modelProvider: ModelProviderName.OPENROUTER as const,
+      bio: ['A test character'],
+      lore: [],
+      messageExamples: [],
+      postExamples: [],
+      topics: [],
+      adjectives: [],
+      style: {
+        all: [],
+        chat: [],
+        post: [],
+      },
+      clients: [],
+      plugins: [],
+      settings: {
+        secrets: {
+          OPENROUTER_API_KEY: mockApiKey,
+        },
+      },
     },
-    storeMemory: async () => {},
-    logger: console
-};
+  };
 
-async function analyzePaper(arxivId: string, description: string) {
-    try {
-        const response = await fetch(`http://export.arxiv.org/api/query?id_list=${arxivId}`);
-        const xmlData = await response.text();
+  const mockPaper: ResearchPaper = {
+    title: 'Mock Title',
+    authors: ['Mock Author'],
+    content: 'Mock content for testing.'
+  };
 
-        const parser = new XMLParser();
-        const result = parser.parse(xmlData);
-        const entry = result.feed.entry;
+  const mockMemory = {
+    userId: '00000000-0000-0000-0000-000000000000',
+    agentId: '00000000-0000-0000-0000-000000000001',
+    roomId: '00000000-0000-0000-0000-000000000002',
+    content: mockPaper
+  };
 
-        const paperDetails = {
-            title: entry.title,
-            authors: Array.isArray(entry.author) 
-                ? entry.author.map(a => a.name)
-                : [entry.author.name],
-            content: entry.summary
-        };
+  const mockAnalysis: PaperAnalysis = {
+    summary: 'Test summary',
+    keyPoints: ['Point 1']
+  };
 
-        console.log(`\n=== Testing Paper: ${description} ===\n`);
-        console.log('Paper details:', paperDetails);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockProcessPaper.mockResolvedValue(mockAnalysis);
+  });
 
-        await analyzePaperAction.handler(
-            mockRuntime as IAgentRuntime,
-            { content: paperDetails },
-            {}, 
-            {}, 
-            (response, _memories) => {
-                console.log('\nAnalysis Response:', response);
-            }
-        );
-
-    } catch (error) {
-        console.error(`Error analyzing paper (${description}):`, error);
-        if (error instanceof Error) {
-            console.error('Full error details:', {
-                message: error.message,
-                stack: error.stack
-            });
-        }
-    }
-}
-
-async function testErrorCases() {
-    console.log('\n=== Testing Error Cases ===\n');
-
-    // Test Case 1: Missing API Key
-    const runtimeNoKey: Partial<IAgentRuntime> = {
-        character: { settings: { secrets: {} } },
-        storeMemory: async () => {},
-        logger: console
-    };
-
-    await analyzePaperAction.handler(
-        runtimeNoKey as IAgentRuntime,
-        { content: { title: 'Test', authors: ['Test'], content: 'Test' } },
-        {}, 
-        {}, 
-        (response, _memories) => {
-            console.log('No API Key Test Response:', response);
-        }
-    );
-
-    // Test Case 2: Invalid paper content
-    await analyzePaperAction.handler(
+  describe('successful execution', () => {
+    test('processes paper with valid inputs', async () => {
+      const options: AnalyzeOptions = {
+        depth: 'quick' as const,
+        outputFormat: 'summary' as const
+      };
+      
+      const callback = jest.fn() as jest.MockedFunction<CallbackFunction>;
+      
+      await analyzePaperAction.handler(
         mockRuntime as IAgentRuntime,
-        { content: { } },
-        {}, 
-        {}, 
-        (response, _memories) => {
-            console.log('Invalid Content Test Response:', response);
-        }
-    );
+        mockMemory,
+        {},
+        options,
+        callback
+      );
 
-    // Test Case 3: Very long content
-    await analyzePaperAction.handler(
+      expect(processPaper).toHaveBeenCalledWith(
+        mockPaper,
+        options,
+        mockApiKey
+      );
+
+      expect(callback).toHaveBeenCalledWith({
+        success: true,
+        analysis: mockAnalysis,
+        citation: expect.any(String)
+      });
+    });
+  });
+
+  describe('error handling', () => {
+    test('handles missing API key', async () => {
+      const runtimeWithoutApiKey = {
+        ...mockRuntime,
+        character: {
+          ...mockRuntime.character,
+          settings: { secrets: {} },
+        },
+      };
+      
+      const callback = jest.fn() as jest.MockedFunction<CallbackFunction>;
+      
+      await analyzePaperAction.handler(
+        runtimeWithoutApiKey as IAgentRuntime,
+        mockMemory,
+        {},
+        {},
+        callback
+      );
+      
+      expect(callback).toHaveBeenCalledWith({
+        error: 'Missing API key for analysis service.'
+      });
+      expect(processPaper).not.toHaveBeenCalled();
+    });
+
+    test('handles processing errors', async () => {
+      mockProcessPaper.mockRejectedValue(new Error('Processing failed'));
+      
+      const callback = jest.fn() as jest.MockedFunction<CallbackFunction>;
+      
+      await analyzePaperAction.handler(
         mockRuntime as IAgentRuntime,
-        { content: { 
-            title: 'Long Paper',
-            authors: ['Test'],
-            content: 'A'.repeat(50000) // Very long content
-        } },
-        {}, 
-        {}, 
-        (response, _memories) => {
-            console.log('Long Content Test Response:', response);
-        }
-    );
-}
+        mockMemory,
+        {},
+        {},
+        callback
+      );
+      
+      expect(callback).toHaveBeenCalledWith({
+        success: false,
+        error: 'Failed to analyze the paper.'
+      });
+    });
+  });
+});
 
-async function runAllTests() {
-    // Regular paper tests
-    await analyzePaper('2501.05443', 'Cyber Abuse Detection');
-    await analyzePaper('2002.07953', 'Domain Adaptation');
-    await analyzePaper('1810.04805', 'BERT'); // Adding a more complex ML paper
+describe('analyzePaper', () => {
+  const mockPaper: ResearchPaper = {
+    title: 'Test Paper',
+    authors: ['Test Author'],
+    content: 'Test content'
+  };
 
-    // Error case tests
-    await testErrorCases();
-    
-    console.log('\n=== All Tests Completed ===\n');
-}
+  const mockAnalysis: PaperAnalysis = {
+    summary: 'Test summary',
+    keyPoints: ['Point 1', 'Point 2']
+  };
 
-runAllTests().catch(console.error);
+  beforeEach(() => {
+    process.env.OPENROUTER_API_KEY = 'test-key';
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('analyzes paper successfully', async () => {
+    const result = await analyzePaper(mockPaper);
+    expect(result).toBeDefined();
+    expect(result.summary).toBeTruthy();
+    expect(Array.isArray(result.keyPoints)).toBe(true);
+  });
+
+  test('handles missing API key', async () => {
+    delete process.env.OPENROUTER_API_KEY;
+    await expect(analyzePaper(mockPaper))
+      .rejects.toThrow('OpenRouter API key not found');
+  });
+
+  test('handles analysis options', async () => {
+    const result = await analyzePaper(mockPaper, {
+      depth: 'detailed',
+      outputFormat: 'structured'
+    });
+    expect(result).toBeDefined();
+  });
+});
