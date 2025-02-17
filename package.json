@@ -1,5 +1,5 @@
 {
-  "name": "copernicusai-web",
+  "name": "copernicus",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,15 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^14.0.4",
+    "@anthropic-ai/sdk": "^0.36.3",
+    "next": "14.0.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "twitter-api-v2": "^1.15.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@types/open": "^6.1.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.0.1",
+    "dotenv": "^16.4.7",
+    "googleapis": "^144.0.0",
+    "open": "^10.1.0",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5.0.0"

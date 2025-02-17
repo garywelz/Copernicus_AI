@@ -1,0 +1,20 @@
+{
+  "name": "@copernicus/tools",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "youtube:token": "ts-node getYouTubeToken.ts",
+    "twitter:test": "ts-node testTwitterShare.ts"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "dotenv": "^16.4.7",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/open": "^6.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+} 

@@ -6,6 +6,7 @@ export interface Episode {
   duration: string;
   date: string;
   url: string;
+  audioUrl: string;
   isFeatured?: boolean;
 }
 
