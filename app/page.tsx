@@ -12,17 +12,19 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900">Copernicus AI</h1>
-          <p className="mt-2 text-xl text-gray-600">
-            Making AI Research Accessible Through Engaging Podcasts
-          </p>
-        </header>
+      <header className="bg-white shadow">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <h1 className="text-3xl font-bold text-gray-900">Copernicus AI</h1>
+        </nav>
+      </header>
 
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Latest Episodes</h2>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-gray-900">Making AI Research Accessible Through Engaging Podcasts</h2>
+        </section>
+
+        <section>
+          <h3 className="text-2xl font-semibold mb-6">Latest Episodes</h3>
           <EpisodeList 
             episodes={episodes} 
             isLoading={isLoading} 
@@ -30,7 +32,12 @@ export default function Home() {
           />
         </section>
       </main>
-      <Footer />
+
+      <footer className="bg-white border-t">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <p className="text-center text-gray-500">© 2025 Copernicus AI. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 } 
