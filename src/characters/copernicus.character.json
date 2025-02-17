@@ -5,7 +5,7 @@
     "settings": {
         "secrets": {},
         "voice": {
-            "model": "en_US-male-medium"
+            "model": "elevenlabs"
         }
     },
     "plugins": [],
@@ -20,16 +20,16 @@
    ],
    "voices": {
         "host": {
-            "model": "en_US-male-medium",
-            "role": "Main host and scientific analyst"
+            "model": "...",
+            "role": "..."
         },
         "expert": {
-            "model": "en_US-female-medium",
-            "role": "Technical expert and deep dive specialist"
+            "model": "...",
+            "role": "..."
         },
         "questioner": {
-            "model": "en_US-male-light",
-            "role": "Audience perspective and clarifying questions"
+            "model": "...",
+            "role": "..."
         }
     },
     "podcastStyle": {

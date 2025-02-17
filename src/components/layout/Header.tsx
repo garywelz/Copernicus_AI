@@ -12,9 +12,6 @@ export function Header() {
             <span className="text-2xl font-bold text-gray-900">Copernicus AI</span>
           </Link>
           <nav className="flex space-x-8">
-            <Link href="/" className="text-gray-700 hover:text-gray-900">
-              Home
-            </Link>
             <Link href="/episodes" className="text-gray-700 hover:text-gray-900">
               Episodes
             </Link>

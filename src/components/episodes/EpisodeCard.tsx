@@ -2,15 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
+import type { Episode } from '@/types/episode';
 
-interface EpisodeCardProps {
-  title: string;
-  description: string;
-  thumbnailUrl: string;
-  duration: string;
-  date: string;
-  url: string;
-}
+type EpisodeCardProps = Episode;
 
 export function EpisodeCard({
   title,
@@ -18,7 +12,7 @@ export function EpisodeCard({
   thumbnailUrl,
   duration,
   date,
-  url,
+  url
 }: EpisodeCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -41,7 +35,7 @@ export function EpisodeCard({
           href={url}
           className="mt-4 block w-full text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
         >
-          Watch Episode
+          Listen Now
         </a>
       </div>
     </div>

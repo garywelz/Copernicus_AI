@@ -6,6 +6,7 @@ import { promisify } from 'util';
 import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
+import type { TweetResponse } from '@/types/twitter';
 
 const execAsync = promisify(exec);
 
@@ -15,19 +16,20 @@ export class PodcastDistributor {
     private audioProcessor: AudioProcessor
   ) {}
 
-  async shareToTwitter(podcast: Podcast, clipDuration: number = 60): Promise<void> {
+  async shareToTwitter(podcast: Podcast): Promise<TweetResponse> {
     try {
       // Create a short preview clip
-      const previewClip = await this.createPreviewClip(podcast.audioUrl, clipDuration);
+      const previewClip = await this.createPreviewClip(podcast.audioUrl, 60);
       
       // Post to Twitter with preview
-      await this.twitterService.postTweet({
+      const tweetResponse = await this.twitterService.postTweet({
         text: `🎙️ New Episode: ${podcast.title}\n\nListen to the full episode here: ${podcast.url}\n\n#AIResearch #Podcast`,
         media: {
           imageData: previewClip,
           mimeType: 'video/mp4'
         }
       });
+      return tweetResponse;
     } catch (error) {
       throw new Error(`Failed to share podcast to Twitter: ${error}`);
     }

@@ -27,4 +27,22 @@ export interface Podcast {
   url: string;
   audioUrl: string;
   duration: number;
+}
+
+export interface PodcastFeed {
+  title: string;
+  description: string;
+  language: string;
+  episodes: PodcastEpisode[];
+}
+
+export interface PodcastEpisode {
+  id?: string;
+  title: string;
+  description?: string;
+  thumbnailUrl?: string;
+  duration?: string;
+  date?: string;
+  url: string;
+  audioUrl: string;
 } 

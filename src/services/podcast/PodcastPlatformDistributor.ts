@@ -1,20 +1,18 @@
-import type { Podcast } from '../../types/podcast';
-
-export interface PodcastFeed {
-  title: string;
-  description: string;
-  language: string;
-  episodes: Podcast[];
-}
+import type { PodcastFeed, PodcastEpisode } from '@/types/podcast';
 
 export class PodcastPlatformDistributor {
-  async generateRssFeed(feed: PodcastFeed): Promise<string> {
-    // Generate RSS feed for podcast platforms
-    // This can be used for Apple Podcasts, Spotify, etc.
-    return '';
+  async generateRssFeed(feed: PodcastFeed): Promise<PodcastFeed> {
+    // Instead of returning a string, return the feed object
+    return {
+      ...feed,
+      episodes: feed.episodes.map((episode: PodcastEpisode) => ({
+        ...episode,
+        // Add any RSS-specific transformations here
+      }))
+    };
   }
 
-  async uploadToHostingPlatform(podcast: Podcast): Promise<void> {
+  async uploadToHostingPlatform(podcast: PodcastFeed): Promise<void> {
     // Implementation for uploading to podcast hosting service
     // (e.g., Anchor, Libsyn, etc.)
   }
