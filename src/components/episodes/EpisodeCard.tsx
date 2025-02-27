@@ -10,33 +10,37 @@ export function EpisodeCard({
   title,
   description,
   thumbnailUrl,
-  duration,
-  date,
-  url
+  videoUrl
 }: EpisodeCardProps) {
+  const handleYouTubeClick = () => {
+    if (videoUrl) {
+      window.open(videoUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="relative aspect-video">
-        <Image
-          src={thumbnailUrl}
-          alt={title}
-          fill
-          className="object-cover"
-        />
-      </div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-        <p className="mt-2 text-gray-600 text-sm line-clamp-2">{description}</p>
-        <div className="mt-4 flex justify-between items-center text-sm text-gray-500">
-          <span>{duration}</span>
-          <span>{date}</span>
+      {thumbnailUrl && (
+        <div className="relative w-full h-48">
+          <Image 
+            src={thumbnailUrl}
+            alt={title}
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+          />
         </div>
-        <a
-          href={url}
-          className="mt-4 block w-full text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+      )}
+      <div className="p-6">
+        <h2 className="text-2xl font-bold mb-2">{title}</h2>
+        <p className="text-gray-700 mb-4">{description}</p>
+        
+        <button
+          onClick={handleYouTubeClick}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded"
         >
           Listen Now
-        </a>
+        </button>
       </div>
     </div>
   );
