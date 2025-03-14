@@ -1,85 +1,69 @@
-import type { IVoiceService, VoiceSynthesisOptions, AudioSegment } from '../interfaces/IVoiceService.js';
-import { AudioProcessor, AudioProcessingOptions } from '../../utils/audio.js';
-import { logger } from '../../utils/logger.js';
-import { AudioEnhancer, AudioEnhancementOptions } from '../../utils/audioEffects.js';
+import { IVoiceService } from '../interfaces/IVoiceService';
+import { VoiceSettings, VoiceSynthesisOptions } from '../../types/voice';
+import { AudioSegment, AudioProcessingOptions } from '../../types/audio';
+import { AudioProcessor } from '../../utils/audio';
+import { AudioEnhancer } from '../../utils/audioEffects';
+import { logger } from '../../utils/logger';
+import fetch from 'node-fetch';
 
 export class TextToSpeechService implements IVoiceService {
+  private readonly apiKey: string;
+  private readonly baseUrl = 'https://api.elevenlabs.io/v1';
   private readonly audioProcessor: AudioProcessor;
   private readonly audioEnhancer: AudioEnhancer;
-  private backgroundMusic?: Buffer;
 
-  constructor(
-    private apiKey: string,
-    private processingOptions: AudioProcessingOptions = {},
-    private enhancementOptions: AudioEnhancementOptions = {}
-  ) {
+  constructor(apiKey: string) {
+    this.apiKey = apiKey;
     this.audioProcessor = new AudioProcessor();
     this.audioEnhancer = new AudioEnhancer();
   }
 
-  async setBackgroundMusic(musicBuffer: Buffer) {
-    this.backgroundMusic = musicBuffer;
-  }
-
-  async synthesize(
-    text: string,
-    options: VoiceSynthesisOptions
-  ): Promise<AudioSegment> {
+  async synthesize(text: string, options: VoiceSynthesisOptions): Promise<AudioSegment> {
     try {
-      logger.info('Synthesizing speech with options:', options);
-
-      const response = await fetch('https://api.tts-service.com/v1/synthesize', {
+      const response = await fetch(`${this.baseUrl}/text-to-speech/${options.model}`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-          'Content-Type': 'application/json'
+          'Accept': 'audio/mpeg',
+          'Content-Type': 'application/json',
+          'xi-api-key': this.apiKey
         },
         body: JSON.stringify({
           text,
-          model: options.model,
-          speed: options.speed ?? 1.0,
-          pitch: options.pitch ?? 1.0,
-          emphasis: options.emphasis ?? 1.0
+          model_id: 'eleven_multilingual_v2',
+          voice_settings: options.settings || {
+            stability: 0.5,
+            similarity_boost: 0.75,
+            style: 0.7,
+            use_speaker_boost: true,
+            volume: 1.0
+          }
         })
       });
 
       if (!response.ok) {
-        throw new Error(`Speech synthesis failed: ${response.statusText}`);
+        const errorText = await response.text();
+        throw new Error(`Failed to synthesize speech: ${response.status} - ${errorText}`);
       }
 
-      let audioData = Buffer.from(await response.arrayBuffer());
+      const audioBuffer = Buffer.from(await response.arrayBuffer());
+      
+      // Process the audio
+      let processedAudio = await this.audioProcessor.processAudio(audioBuffer);
+      
+      // Enhance the audio
+      processedAudio = await this.audioEnhancer.enhance(processedAudio);
 
-      // Apply audio processing
-      if (this.processingOptions.fadeInDuration || this.processingOptions.fadeOutDuration) {
-        audioData = this.audioProcessor.applyFade(
-          audioData,
-          this.processingOptions.fadeInDuration,
-          this.processingOptions.fadeOutDuration
-        );
-      }
-
-      // Mix with background if available
-      if (this.backgroundMusic && this.processingOptions.backgroundVolume) {
-        audioData = this.audioProcessor.mixWithBackground(
-          audioData,
-          this.backgroundMusic,
-          this.processingOptions.backgroundVolume
-        );
-      }
-
-      // Add enhancement step
-      audioData = this.audioEnhancer.enhanceAudio(audioData, this.enhancementOptions);
-
-      const duration = await this.getAudioDuration(audioData);
+      // Estimate duration (assuming 16kHz 16-bit audio)
+      const duration = Math.ceil(processedAudio.length / 32000);
 
       return {
-        audioData,
+        audioData: processedAudio,
         duration,
         speaker: options.model
       };
     } catch (error) {
-      logger.error('Error in speech synthesis:', error);
-      throw new Error('Speech synthesis failed');
+      logger.error('Error in synthesize:', error);
+      throw error;
     }
   }
 
@@ -91,9 +75,9 @@ export class TextToSpeechService implements IVoiceService {
         const segment = segments[i];
         processedSegments.push(segment.audioData);
 
-        // Add pause after segment if configured
-        if (this.processingOptions.pauseDuration && i < segments.length - 1) {
-          const pause = this.audioProcessor.addPause(this.processingOptions.pauseDuration);
+        // Add a small pause between segments (0.5 seconds)
+        if (i < segments.length - 1) {
+          const pause = Buffer.alloc(22050); // 0.5 seconds at 44.1kHz
           processedSegments.push(pause);
         }
       }
@@ -101,13 +85,7 @@ export class TextToSpeechService implements IVoiceService {
       return Buffer.concat(processedSegments);
     } catch (error) {
       logger.error('Error combining audio segments:', error);
-      throw new Error('Failed to combine audio segments');
+      throw error;
     }
-  }
-
-  private async getAudioDuration(audioData: Buffer): Promise<number> {
-    // Here we would use an audio library to get actual duration
-    // For now, estimate based on buffer size
-    return Math.ceil(audioData.length / 32000); // Rough estimate for 16kHz 16-bit audio
   }
 } 

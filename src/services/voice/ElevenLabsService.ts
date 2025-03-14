@@ -1,7 +1,7 @@
-import type { IVoiceService, VoiceSynthesisOptions, AudioSegment } from '../interfaces/IVoiceService.js';
-import { AudioProcessor, AudioProcessingOptions } from '../../utils/audio.js';
-import { AudioEnhancer, AudioEnhancementOptions } from '../../utils/audioEffects.js';
-import { logger } from '../../utils/logger.js';
+import type { IVoiceService, VoiceSynthesisOptions, AudioSegment } from '../interfaces/IVoiceService';
+import { AudioProcessor, AudioProcessingOptions } from '../../utils/audio';
+import { AudioEnhancer, AudioEnhancementOptions } from '../../utils/audioEffects';
+import { logger } from '../../utils/logger';
 import { getAudioDurationInSeconds } from 'get-audio-duration';
 import path from 'path';
 import os from 'os';
@@ -127,14 +127,18 @@ export class ElevenLabsService implements IVoiceService {
       const response = await fetch(`${ELEVENLABS_API_URL}/text-to-speech/${voiceConfig.voiceId}`, {
         method: 'POST',
         headers: {
-          'Accept': 'audio/mp3',
+          'Accept': 'audio/mpeg',
           'xi-api-key': this.apiKey,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           text,
           model_id: 'eleven_monolingual_v1',
-          voice_settings: this.getVoiceSettings(options.model)
+          voice_settings: {
+            ...this.getVoiceSettings(options.model),
+            optimize_streaming_latency: 0,
+            output_format: 'mp3_44100_128'
+          }
         })
       });
 
@@ -153,6 +157,9 @@ export class ElevenLabsService implements IVoiceService {
       audioData = await this.convertToMp3(audioData);
       console.log('Converted MP3 size:', audioData.length);
 
+      // Add additional FFmpeg processing for each segment
+      audioData = await this.processAudioSegment(audioData);
+
       const duration = await this.getAudioDuration(audioData);
       console.log('Audio duration:', duration);
 
@@ -165,6 +172,48 @@ export class ElevenLabsService implements IVoiceService {
       logger.error('Error in speech synthesis:', error);
       throw error;
     }
+  }
+
+  private async processAudioSegment(audioData: Buffer): Promise<Buffer> {
+    const tempDir = path.join(os.tmpdir(), `segment-${Date.now()}`);
+    await fs.mkdir(tempDir, { recursive: true });
+    
+    const inputFile = path.join(tempDir, 'input.mp3');
+    const outputFile = path.join(tempDir, 'output.mp3');
+    
+    await fs.writeFile(inputFile, audioData);
+    
+    // More compatible settings
+    const ffmpegArgs = [
+      '-i', inputFile,
+      '-acodec', 'libmp3lame',
+      '-ar', '48000',        // Changed to 48kHz
+      '-ac', '2',            // Changed to stereo
+      '-b:a', '192k',        // Increased bitrate
+      '-af', 'aresample=48000:async=1000,apad,volume=1.5,loudnorm=I=-16:TP=-1.5:LRA=11',
+      '-y',
+      outputFile
+    ];
+
+    return new Promise((resolve, reject) => {
+      const ffmpeg = spawn('ffmpeg', ffmpegArgs);
+      
+      ffmpeg.on('close', async (code) => {
+        try {
+          if (code === 0) {
+            const processedAudio = await fs.readFile(outputFile);
+            resolve(processedAudio);
+          } else {
+            reject(new Error('Failed to process audio segment'));
+          }
+        } finally {
+          // Cleanup
+          fs.unlink(inputFile).catch(() => {});
+          fs.unlink(outputFile).catch(() => {});
+          fs.rmdir(tempDir).catch(() => {});
+        }
+      });
+    });
   }
 
   async setBackgroundMusic(musicBuffer: Buffer) {
@@ -188,17 +237,18 @@ export class ElevenLabsService implements IVoiceService {
       const fileList = tempFiles.map(f => `file '${f}'`).join('\n');
       await fs.writeFile(listFile, fileList);
 
-
-      // Output file
       const outputFile = path.join(tempDir, 'output.mp3');
 
-      // Simpler ffmpeg command without background music
       const ffmpegArgs = [
         '-f', 'concat',
         '-safe', '0',
         '-i', listFile,
-        '-c:a', 'libmp3lame',
-        '-q:a', '2',
+        '-acodec', 'libmp3lame',
+        '-ar', '48000',        // Changed to 48kHz
+        '-ac', '2',            // Changed to stereo
+        '-b:a', '192k',        // Increased bitrate
+        '-af', 'aresample=48000:async=1000,apad,volume=1.5,loudnorm=I=-16:TP=-1.5:LRA=11',
+        '-y',
         outputFile
       ];
 
@@ -283,7 +333,7 @@ export class ElevenLabsService implements IVoiceService {
   async generatePodcastEpisode(topic: string, outline: string) {
     const script = await this.generateScript(topic, outline);
     const segments = await this.generateAudioSegments(script);
-    return this.combineSegments(segments);
+    return this.combineAudio(segments);
   }
 
   // Generate podcast script using ElevenLabs' AI

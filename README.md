@@ -1,52 +1,128 @@
-# Eliza
+# Copernicus Science Podcast Project
 
-## Edit the character files
+This repository contains tools for generating and playing science podcasts across various disciplines.
 
-Open `src/character.ts` to modify the default character. Uncomment and edit.
+## Project Components
 
-### Custom characters
+### 1. Podcast Generation Script
 
-To load custom characters instead:
-- Use `pnpm start --characters="path/to/your/character.json"`
-- Multiple character files can be loaded simultaneously
+The `generate_all_podcasts.py` script automates the creation of science podcasts for different disciplines:
 
-### Add clients
+- Biology
+- Computer Science
+- Chemistry
+- Physics
+- Mathematics
+- Science News
 
-```diff
-- clients: [],
-+ clients: [Clients.TWITTER, Clients.DISCORD],
+#### Usage
+
+   ```bash
+# Generate all podcasts
+python generate_all_podcasts.py
+
+# Generate specific podcast types
+python generate_all_podcasts.py --type biology
+python generate_all_podcasts.py --type compsci
+python generate_all_podcasts.py --type news
 ```
 
-## Duplicate the .env.example template
+The script will create podcast files with descriptions, show notes, and transcripts.
 
-```bash
-cp .env.example .env
+### 2. Science Podcast Player Chrome Extension
+
+A Chrome extension that allows you to listen to science podcasts directly in your browser. This extension provides a clean, intuitive interface for playing science podcasts across various disciplines.
+
+#### Features
+
+- **Curated Science Podcasts**: Access a collection of high-quality science podcasts across multiple disciplines
+- **Elegant Player Interface**: Clean, Material Design-inspired UI with intuitive controls
+- **Playback Control**: Play/pause, skip forward/backward, adjust volume, and change playback speed
+- **Persistent Playback**: Your playback position is saved between sessions
+- **Light/Dark Theme**: Choose between light and dark themes based on your preference
+- **Responsive Design**: Works well on various screen sizes
+
+#### Installation
+
+##### From Chrome Web Store (Coming Soon)
+1. Visit the Chrome Web Store (link to be added)
+2. Click "Add to Chrome"
+3. Confirm the installation when prompted
+
+##### Manual Installation (Developer Mode)
+1. Navigate to the `chrome-extension` directory
+2. Run `./build.sh install` to install dependencies
+3. Run `./build.sh build` to build the extension
+4. Open Chrome and navigate to `chrome://extensions/`
+5. Enable "Developer mode" using the toggle in the top-right corner
+6. Click "Load unpacked"
+7. Select the `chrome-extension/dist` folder
+8. The extension should now appear in your extensions list and in the toolbar
+
+#### Development
+
+The extension is built using modern web technologies:
+
+- TypeScript for type-safe JavaScript
+- Webpack for bundling
+- ESLint for code quality
+- Material Design for UI
+
+##### Build Commands
+
+   ```bash
+# Install dependencies
+./build.sh install
+
+# Development build with watch mode
+./build.sh dev
+
+# Production build
+./build.sh build
+
+# Package for distribution
+./build.sh package
+
+# Lint code
+./build.sh lint
+
+# Type check TypeScript
+./build.sh typecheck
+
+# Clean build artifacts
+./build.sh clean
 ```
 
-\* Fill out the .env file with your own values.
+##### Project Structure
 
-### Add login credentials and keys to .env
-
-```diff
--DISCORD_APPLICATION_ID=
--DISCORD_API_TOKEN= # Bot token
-+DISCORD_APPLICATION_ID="000000772361146438"
-+DISCORD_API_TOKEN="OTk1MTU1NzcyMzYxMT000000.000000.00000000000000000000000000000000"
-...
--OPENROUTER_API_KEY=
-+OPENROUTER_API_KEY="sk-xx-xx-xxx"
-...
--TWITTER_USERNAME= # Account username
--TWITTER_PASSWORD= # Account password
--TWITTER_EMAIL= # Account email
-+TWITTER_USERNAME="username"
-+TWITTER_PASSWORD="password"
-+TWITTER_EMAIL="your@email.com"
+```
+chrome-extension/
+├── css/                  # Stylesheets
+│   ├── popup.css         # Popup styles
+│   └── styles.css        # Common styles
+├── images/               # Icons and images
+│   ├── icon128.svg       # Extension icon (128x128)
+│   ├── icon48.svg        # Extension icon (48x48)
+│   └── icon16.svg        # Extension icon (16x16)
+├── js/                   # JavaScript/TypeScript files
+│   ├── background.js     # Background service worker
+│   ├── content.js        # Content script
+│   ├── options.js        # Options page script
+│   ├── popup.js          # Popup script
+│   └── utils.js          # Utility functions
+├── manifest.json         # Extension manifest
+├── popup.html            # Popup HTML
+├── options.html          # Options page HTML
+├── package.json          # NPM package configuration
+├── webpack.config.js     # Webpack configuration
+├── tsconfig.json         # TypeScript configuration
+├── .eslintrc.js          # ESLint configuration
+├── babel.config.js       # Babel configuration
+├── build.sh              # Build script
+├── LICENSE               # MIT License
+└── README.md             # Extension README
 ```
 
-## Install dependencies and start your agent
+## License
 
-```bash
-pnpm i && pnpm start
-```
-Note: this requires node to be at least version 22 when you install packages and run the agent.
+This project is licensed under the MIT License - see the LICENSE file for details.

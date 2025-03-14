@@ -4,56 +4,84 @@ import { musicLibrary } from '../../config/musicLibrary';
 import { PodcastScript } from '../../types/podcast';
 import { logger } from '../../utils/logger';
 import fs from 'fs/promises';
-import { IVoiceService } from '../voice/IVoiceService';
+import { IVoiceService } from '../interfaces/IVoiceService';
+import { DescriptService } from '../descript/DescriptService';
 
 export class PodcastGenerator {
+  private descriptService?: DescriptService;
+
   constructor(
     private ttsService: IVoiceService,
-    private backgroundMusicSelector?: BackgroundMusicSelector
-  ) {}
+    descriptConfig?: { apiKey: string }
+  ) {
+    if (descriptConfig) {
+      this.descriptService = new DescriptService(descriptConfig);
+    }
+  }
 
-  async generatePodcast(template: any): Promise<Buffer> {
+  async generatePodcast(template: PodcastScript): Promise<Buffer> {
     try {
-      // Load and verify background music
-      const backgroundMusic = await fs.readFile('assets/music/science-background.mp3');
-      console.log('Background music loaded:', backgroundMusic.length, 'bytes');
-      
-      // Verify intro/outro exist
-      const introExists = await fs.access('assets/music/intro-sting.mp3').then(() => true).catch(() => false);
-      const outroExists = await fs.access('assets/music/outro-sting.mp3').then(() => true).catch(() => false);
-      console.log('Music files present:', { introExists, outroExists });
-
-      await this.ttsService.setBackgroundMusic(backgroundMusic);
-
       // Generate speech segments sequentially with pauses
       const segments = [];
+      let previousEndTime = 0;
+
       for (const segment of template.segments) {
-        const audioSegment = await this.ttsService.synthesize(segment.text, {
-          model: segment.speaker,
-          speed: 1.0,
-          pauseAfter: true  // Add pause after each segment
-        });
-        segments.push(audioSegment);
-        
-        // Add longer pauses between main sections
-        if (segment.isMainBreak) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        } else {
-          await new Promise(resolve => setTimeout(resolve, 500));
+        try {
+          console.log('Generating segment:', segment.text.substring(0, 50) + '...');
+          const voiceConfig = template.voices[segment.speaker];
+          if (!voiceConfig) {
+            throw new Error(`No voice config found for speaker: ${segment.speaker}`);
+          }
+
+          const audioSegment = await this.ttsService.synthesize(segment.text, {
+            model: voiceConfig.id,
+            settings: voiceConfig.settings,
+            speed: 1.0
+          });
+
+          // Add small gap between segments
+          if (segments.length > 0) {
+            const gap = Buffer.alloc(22050); // 0.5 seconds of silence at 44.1kHz
+            audioSegment.audioData = Buffer.concat([gap, audioSegment.audioData]);
+            audioSegment.duration += 0.5;
+          }
+
+          segments.push(audioSegment);
+        } catch (segmentError) {
+          console.error('Failed to generate segment:', segmentError);
+          throw segmentError;
         }
       }
 
-      // Combine segments with background music
-      const finalAudio = await this.ttsService.combineAudio(segments, {
-        backgroundMusicVolume: 0.15,  // Subtle background music
-        crossFadeDuration: 0.8,       // Smooth transitions
-        pauseDuration: 0.5            // Consistent pauses
-      });
+      // Combine all segments
+      console.log('Combining', segments.length, 'segments');
+      const finalAudio = await this.ttsService.combineAudio(segments);
+      console.log('Final audio size:', finalAudio.length);
+
+      if (this.descriptService) {
+        // Upload to Descript for additional processing
+        const audioId = await this.descriptService.uploadPodcastAudio(
+          'path/to/output.mp3',
+          { name: template.title }
+        );
+        
+        // Create as podcast episode
+        const episode = await this.descriptService.createPodcastEpisode(
+          audioId,
+          { name: template.title }
+        );
+        
+        logger.info('Audio uploaded to Descript for processing:', episode.id);
+      }
 
       return finalAudio;
-    } catch (error) {
-      logger.error('Error generating podcast:', error);
-      throw new Error('Failed to generate podcast audio');
+    } catch (error: unknown) {
+      console.error('Detailed error in podcast generation:', error);
+      if (error instanceof Error) {
+        throw new Error('Failed to generate podcast audio: ' + error.message);
+      } else {
+        throw new Error('Failed to generate podcast audio: Unknown error');
+      }
     }
   }
 } 

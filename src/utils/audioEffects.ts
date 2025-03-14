@@ -1,5 +1,6 @@
-import { AudioProcessor } from './audio';
+import { AudioProcessor, AudioProcessingOptions } from './audio';
 import { logger } from './logger';
+import { AudioProcessingOptions as AudioProcessingOptionsType } from '../types/audio';
 
 export interface AudioEffect {
   type: 'eq' | 'compress' | 'normalize' | 'reverb';
@@ -19,41 +20,44 @@ export interface AudioEnhancementOptions {
   };
 }
 
-export class AudioEnhancer extends AudioProcessor {
+export class AudioEnhancer {
+  private options: AudioEnhancementOptions;
+
+  constructor(options: AudioEnhancementOptions = {}) {
+    this.options = options;
+  }
+
   /**
    * Enhance audio quality for podcast
    */
-  enhanceAudio(
-    audio: Buffer,
-    options: AudioEnhancementOptions = {}
-  ): Buffer {
+  async enhance(audioBuffer: Buffer): Promise<Buffer> {
     try {
-      let enhanced = audio;
+      let enhanced = audioBuffer;
 
-      if (options.normalize) {
+      if (this.options.normalize) {
         enhanced = this.normalizeAudio(enhanced);
       }
 
-      if (options.compression) {
+      if (this.options.compression) {
         enhanced = this.applyCompression(
           enhanced,
-          options.compression.threshold,
-          options.compression.ratio
+          this.options.compression.threshold,
+          this.options.compression.ratio
         );
       }
 
-      if (options.equalization) {
-        enhanced = this.applyEQ(enhanced, options.equalization);
+      if (this.options.equalization) {
+        enhanced = this.applyEQ(enhanced, this.options.equalization);
       }
 
       return enhanced;
     } catch (error) {
-      logger.error('Error enhancing audio:', error);
-      return audio;
+      console.error('Error enhancing audio:', error);
+      return audioBuffer;
     }
   }
 
-  public normalizeAudio(audio: Buffer): Buffer {
+  private normalizeAudio(audio: Buffer): Buffer {
     const result = Buffer.from(audio);
     let maxAmplitude = 0;
 

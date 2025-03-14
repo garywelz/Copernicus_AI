@@ -1,8 +1,12 @@
 import { jest, describe, test, expect } from '@jest/globals';
 import { ArxivService } from '../services/arxiv/ArxivService';
-import { Response, Headers } from 'node-fetch';
+import type { Response, RequestInfo, RequestInit } from 'node-fetch';
+import { Headers } from 'node-fetch';
 
-interface MockResponse extends Response {
+// First install @types/jest
+// npm install --save-dev @types/jest
+
+interface MockResponse extends Partial<Response> {
   ok: boolean;
   status: number;
   text: () => Promise<string>;
@@ -11,9 +15,8 @@ interface MockResponse extends Response {
   url: string;
   redirected: boolean;
   type: ResponseType;
-  body: null;
   bodyUsed: boolean;
-  bytes: () => Promise<Uint8Array>;
+  bytes?: () => Promise<Uint8Array>;  // Make bytes optional
   clone: () => Response;
 }
 
@@ -32,7 +35,7 @@ describe('ArxivService', () => {
   `;
 
   test('parses XML response correctly', async () => {
-    const mockFetchResponse = {
+    const mockFetchResponse: MockResponse = {
       ok: true,
       status: 200,
       text: async () => mockXmlResponse,
@@ -41,14 +44,12 @@ describe('ArxivService', () => {
       url: 'test-url',
       redirected: false,
       type: 'default' as ResponseType,
-      body: null,
       bodyUsed: false,
-      bytes: () => Promise.resolve(new Uint8Array()),
-      clone: function() { return this as Response; }
-    } as MockResponse;
+      clone: function() { return this as unknown as Response }
+    };
 
     const mockFetch = jest.spyOn(global, 'fetch')
-      .mockImplementation(async (input: RequestInfo | URL, init?: RequestInit) => mockFetchResponse);
+      .mockImplementation(async () => mockFetchResponse as unknown as globalThis.Response);
 
     const service = new ArxivService();
     const result = await service.searchPapers({ search_query: 'test' });

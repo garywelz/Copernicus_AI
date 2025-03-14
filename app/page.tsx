@@ -1,28 +1,39 @@
-'use client';
-
 import React from 'react';
 import { EpisodeCard } from '../src/components/episodes/EpisodeCard';
-
-const sampleEpisode = {
-  id: '1',
-  title: 'Understanding Black Holes',
-  description: 'A mathematical exploration of black holes and their properties.',
-  thumbnailUrl: 'https://img.youtube.com/vi/DB-5I8iuL3A/maxresdefault.jpg',
-  videoUrl: 'https://www.youtube.com/watch?v=DB-5I8iuL3A',
-};
+import { sampleEpisodes } from '../src/data/sampleEpisodes';
+import { PageLayout } from '@/components/layout/PageLayout';
 
 export default function Home() {
   return (
-    <main className="p-8">
+    <PageLayout>
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold mb-4">Copernicus AI</h1>
         <p className="text-xl text-gray-600">
           Keeping Current With Engaging AI Podcasts
         </p>
       </div>
-      <div className="max-w-2xl mx-auto">
-        <EpisodeCard {...sampleEpisode} />
+      
+      {/* Featured Episodes */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-semibold mb-6">Featured Episodes</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sampleEpisodes
+            .filter(episode => episode.isFeatured)
+            .map(episode => (
+              <EpisodeCard key={episode.id} {...episode} />
+            ))}
+        </div>
       </div>
-    </main>
+      
+      {/* All Episodes */}
+      <div>
+        <h2 className="text-2xl font-semibold mb-6">All Episodes</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sampleEpisodes.map(episode => (
+            <EpisodeCard key={episode.id} {...episode} />
+          ))}
+        </div>
+      </div>
+    </PageLayout>
   );
 } 

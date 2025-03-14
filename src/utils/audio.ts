@@ -1,10 +1,11 @@
-import { AudioSegment } from '../services/interfaces/IVoiceService';
+import { AudioSegment, AudioProcessingOptions as AudioOptions } from '../types/audio';
 import { logger } from './logger';
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
+import { Buffer } from 'buffer';
 
 const execAsync = promisify(exec);
 
@@ -16,6 +17,7 @@ export interface AudioProcessingOptions {
   fadeOutDuration?: number;
   pauseDuration?: number;
   backgroundVolume?: number;
+  volume?: number;
 }
 
 export class AudioProcessor {
@@ -24,7 +26,7 @@ export class AudioProcessor {
   private channels: number;
   private bytesPerSample: number;
 
-  constructor(options: AudioProcessingOptions = {}) {
+  constructor(options: AudioOptions = {}) {
     this.sampleRate = options.sampleRate || 44100;
     this.bitDepth = options.bitDepth || 16;
     this.channels = options.channels || 2; // Default to stereo
@@ -205,8 +207,11 @@ export class AudioProcessor {
       // Load and normalize background track
       const bgMusic = await fs.readFile(trackPath);
       return this.normalizeAudio(bgMusic);
-    } catch (error) {
-      throw new Error(`Failed to load background track: ${error.message}`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to load background track: ${error.message}`);
+      }
+      throw new Error('Failed to load background track: Unknown error');
     }
   }
 
@@ -261,4 +266,35 @@ export class AudioProcessor {
       return audio;
     }
   }
+
+  async processAudio(audioBuffer: Buffer): Promise<Buffer> {
+    // For now, just return the original buffer
+    // In a real implementation, this would apply audio processing
+    return audioBuffer;
+  }
+}
+
+/**
+ * Combines multiple audio buffers into a single buffer
+ */
+export function combineAudioBuffers(buffers: Buffer[]): Buffer {
+  return Buffer.concat(buffers);
+}
+
+/**
+ * Creates a silence buffer of specified duration
+ * @param durationMs Duration in milliseconds
+ * @param sampleRate Sample rate (default 44100)
+ */
+export function createSilence(durationMs: number, sampleRate: number = 44100): Buffer {
+  const samples = Math.floor(durationMs * sampleRate / 1000);
+  return Buffer.alloc(samples * 2); // 16-bit samples = 2 bytes per sample
+}
+
+/**
+ * Normalizes audio levels across multiple segments
+ */
+export function normalizeAudio(buffer: Buffer): Buffer {
+  // Basic implementation - could be enhanced with actual audio normalization
+  return buffer;
 } 

@@ -59,58 +59,58 @@ export const shortSamplePodcastTemplate = {
   backgroundMusic: "science-contemplative",
   segments: [
     {
-      speaker: "en_US-male-medium",
+      speaker: "host",
       text: "Welcome to Copernicus AI. I'm Antoni Kowalski, and today we're diving into one of the most fascinating mathematical puzzles in the universe: the geometry of black holes.",
       isMainBreak: true,
       isIntro: true
     },
     {
-      speaker: "en_US-female-medium",
+      speaker: "expert",
       text: "A black hole represents a point in space where gravity is so strong that nothing, not even light, can escape. But what's truly remarkable is how mathematics predicted their existence long before we had any observational evidence."
     },
     {
-      speaker: "en_US-male-medium",
+      speaker: "host",
       text: "The story begins with Einstein's field equations of general relativity. These elegant mathematical formulas describe how space and time curve in response to matter and energy. In 1915, just months after Einstein published his theory, Karl Schwarzschild found a solution that described what we now call a black hole."
     },
     {
-      speaker: "en_US-male-light",
+      speaker: "copernicus",
       text: "The mathematics revealed something extraordinary: a spherical boundary in space-time called the event horizon. Cross this boundary, and the laws of physics as we know them begin to break down."
     },
     {
-      speaker: "en_US-male-medium",
+      speaker: "host",
       text: "Let's explore how these mathematical concepts translate to physical reality. The event horizon's radius, known as the Schwarzschild radius, is given by a deceptively simple formula: R = 2GM/c². Here, G is Newton's gravitational constant, M is the mass of the black hole, and c is the speed of light."
     },
     {
-      speaker: "en_US-female-medium",
+      speaker: "expert",
       text: "To put this in perspective, if Earth were somehow compressed to become a black hole, its Schwarzschild radius would be just 9 millimeters. For our Sun, it would be about 3 kilometers. But supermassive black holes at the centers of galaxies can have event horizons larger than our entire solar system."
     },
     {
-      speaker: "en_US-male-medium",
+      speaker: "host",
       text: "But the real mathematical beauty emerges when we consider what happens near the event horizon. Time itself begins to warp, leading to what we call gravitational time dilation. This effect was actually first predicted by Einstein's equations before we had any way to measure it."
     },
     {
-      speaker: "en_US-male-light",
+      speaker: "copernicus",
       text: "From the perspective of an outside observer, time appears to slow down for anything approaching the event horizon. Mathematically, this is described by the Schwarzschild metric, which shows that time intervals stretch to infinity at the horizon itself."
     },
     {
-      speaker: "en_US-male-medium",
+      speaker: "host",
       text: "Perhaps most intriguing is what mathematics tells us about the center of a black hole - the singularity. Here, our current mathematical models predict that space-time curvature becomes infinite, suggesting a point where our understanding of physics breaks down completely."
     },
     {
-      speaker: "en_US-female-medium",
+      speaker: "expert",
       text: "Recent mathematical work in quantum gravity and string theory has begun to suggest ways we might resolve this singularity paradox. These approaches hint at exotic new physics that could prevent the formation of true mathematical infinities."
     },
     {
-      speaker: "en_US-male-medium",
+      speaker: "host",
       text: "As we conclude our exploration today, we're reminded that mathematics isn't just a tool for describing the universe - it's a flashlight that illuminates the darkest corners of reality, even those parts that seem to swallow light itself."
     },
     {
-      speaker: "en_US-male-medium",
+      speaker: "host",
       text: "But before we delve deeper, let's understand why this mathematical framework is so crucial to our understanding of the universe.",
       isMainBreak: true
     },
     {
-      speaker: "en_US-male-medium",
+      speaker: "host",
       text: "This is Antoni Kowalski for Copernicus AI. Until next time, keep questioning, keep exploring.",
       isOutro: true
     }

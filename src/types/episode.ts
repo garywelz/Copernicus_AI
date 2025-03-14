@@ -7,7 +7,10 @@ export interface Episode {
   date: string;
   url: string;
   audioUrl: string;
+  videoUrl?: string | null;
+  descriptUrl?: string | null;
   isFeatured?: boolean;
+  transcript?: string;
 }
 
 export type EpisodeList = Episode[]; 

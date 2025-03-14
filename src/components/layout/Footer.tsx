@@ -14,30 +14,15 @@ export function Footer() {
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Links</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Follow Us</h3>
             <ul className="mt-2 space-y-2">
               <li>
-                <a href="/episodes" className="text-gray-600 hover:text-gray-900">
-                  Episodes
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="text-gray-600 hover:text-gray-900">
-                  About
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900">Connect</h3>
-            <ul className="mt-2 space-y-2">
-              <li>
-                <a href="https://twitter.com/CopernicusAI" className="text-gray-600 hover:text-gray-900">
+                <a href="https://twitter.com/Copernicus_AI" className="text-gray-600 hover:text-gray-900">
                   Twitter
                 </a>
               </li>
               <li>
-                <a href="https://youtube.com/@CopernicusAI" className="text-gray-600 hover:text-gray-900">
+                <a href="https://youtube.com/@Copernicus_AI" className="text-gray-600 hover:text-gray-900">
                   YouTube
                 </a>
               </li>
