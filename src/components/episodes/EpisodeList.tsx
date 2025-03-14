@@ -12,14 +12,29 @@ interface EpisodeListProps {
 }
 
 export function EpisodeList({ episodes, isLoading, error }: EpisodeListProps) {
-  if (isLoading) return <LoadingSpinner />;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center py-12">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500 text-center py-12">
+        {error}
+      </div>
+    );
+  }
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <>
       {episodes.map(episode => (
-        <EpisodeCard key={episode.id} {...episode} />
+        <div key={episode.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+          <EpisodeCard {...episode} />
+        </div>
       ))}
-    </div>
+    </>
   );
 } 

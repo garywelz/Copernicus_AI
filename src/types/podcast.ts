@@ -1,25 +1,41 @@
+import { VoiceConfig } from './voice';
+
 export interface PodcastSegment {
   title: string;
-  content: string;
-  duration?: number;
-  speaker: string;
-  pauseAfter?: boolean;
+  speaker: 'host' | 'expert' | 'questioner';
+  text: string;
+  duration: number;
 }
 
 export interface PodcastScript {
   title: string;
-  introduction: string;
+  description: string;
+  duration: number;
+  style: string;
+  complexity: string;
+  voices: {
+    host: VoiceConfig;
+    expert: VoiceConfig;
+    questioner: VoiceConfig;
+  };
   segments: PodcastSegment[];
-  conclusion: string;
-  totalDuration?: number;
-  targetDuration: number;
-  complexity: 'beginner' | 'intermediate' | 'advanced';
+  references: Reference[];
+}
+
+export interface Reference {
+  title: string;
+  authors: string[];
+  journal: string;
+  date: string;
+  publisher?: string;
+  volume?: string;
+  pages?: string;
 }
 
 export interface PodcastOptions {
   style: 'conversational' | 'narrative' | 'educational';
   targetDuration: number; // in minutes
-  complexity: 'beginner' | 'intermediate' | 'advanced';
+  complexity: 'beginner' | 'intermediate' | 'expert';
 }
 
 export interface Podcast {

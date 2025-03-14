@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/output/(.*)",
+      "dest": "/api/output/$1"
+    }
+  ],
+  "github": {
+    "silent": true
+  },
+  "installCommand": "npm install"
+} 
