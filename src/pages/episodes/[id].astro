@@ -1,0 +1,72 @@
+import Layout from '../../layouts/Layout.astro';
+import { getShowEpisodes } from '../../utils/spotify';
+import type { SpotifyEpisode } from '../../utils/spotify';
+
+export async function getStaticPaths() {
+  const showId = import.meta.env.SPOTIFY_SHOW_ID;
+  const episodes = await getShowEpisodes(showId);
+  
+  return episodes.map(episode => ({
+    params: { id: episode.id.split(':')[2] },
+    props: { episode },
+  }));
+}
+
+interface Props {
+  episode: SpotifyEpisode;
+}
+
+const { episode } = Astro.props;
+
+<Layout title={episode.name}>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div class="p-8">
+        <div class="flex items-start space-x-8">
+          <div class="flex-shrink-0">
+            <img
+              src={episode.images[0]?.url || '/placeholder.png'}
+              alt={episode.name}
+              class="w-48 h-48 rounded-lg object-cover"
+              width={192}
+              height={192}
+            />
+          </div>
+          <div class="flex-1 min-w-0">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">
+              {episode.name}
+            </h1>
+            <div class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+              <time datetime={episode.release_date}>
+                {new Date(episode.release_date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+              <span>•</span>
+              <span>
+                {Math.floor(episode.duration_ms / 60000)}:
+                {((episode.duration_ms % 60000) / 1000).toString().padStart(2, '0')}
+              </span>
+            </div>
+            <div class="prose max-w-none">
+              <p class="text-gray-600 whitespace-pre-line">{episode.description}</p>
+            </div>
+            <div class="mt-8">
+              <iframe
+                src={`https://open.spotify.com/embed/episode/${episode.id.split(':')[2]}`}
+                width="100%"
+                height="232"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media"
+                class="rounded-lg"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout> 
