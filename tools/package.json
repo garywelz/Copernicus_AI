@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
+    "youtube:test": "ts-node testYouTubeUpload.ts",
     "youtube:token": "ts-node getYouTubeToken.ts",
     "twitter:test": "ts-node testTwitterShare.ts"
   },

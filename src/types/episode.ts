@@ -6,11 +6,13 @@ export interface Episode {
   duration: string;
   date: string;
   url: string;
-  audioUrl: string;
-  videoUrl?: string | null;
-  descriptUrl?: string | null;
-  isFeatured?: boolean;
-  transcript?: string;
+  audioUrl?: string;
+  isFeatured: boolean;
+  subject?: string;
+  spotifyUrl: string;
+  spotifyUri: string;
+  spotifyShowUrl?: string;
+  spotifyEmbedUrl?: string;
 }
 
 export type EpisodeList = Episode[]; 
