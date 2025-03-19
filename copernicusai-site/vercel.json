@@ -1,6 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "npm install",
+  "buildCommand": false,
+  "installCommand": "npm install",
   "outputDirectory": ".",
   "functions": {
     "api/**/*.js": {
