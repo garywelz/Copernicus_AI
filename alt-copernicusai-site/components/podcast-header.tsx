@@ -1,5 +1,5 @@
+// components/podcast-header.tsx
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
 import { ExternalLink } from 'lucide-react'
 
 interface PodcastHeaderProps {
@@ -39,12 +39,15 @@ export default function PodcastHeader({ podcast }: PodcastHeaderProps) {
 
         <p className="text-lg mb-8">{podcast.description}</p>
 
-        <Button className="bg-green-600 hover:bg-green-700" asChild>
-          <a href={podcast.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-            <ExternalLink className="mr-2 h-4 w-4" />
-            Follow on Spotify
-          </a>
-        </Button>
+        <a 
+          href={podcast.external_urls.spotify} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md"
+        >
+          <ExternalLink className="mr-2 h-4 w-4" />
+          Follow on Spotify
+        </a>
       </div>
     </div>
   )
