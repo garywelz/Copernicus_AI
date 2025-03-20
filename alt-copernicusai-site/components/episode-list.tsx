@@ -1,4 +1,3 @@
-cat > copernicusai-site/components/episode-list.tsx << 'EOF'
 import Image from "next/image"
 import { formatDistanceToNow } from "date-fns"
 import { Card, CardContent } from "@/components/ui/card"
@@ -72,4 +71,3 @@ export default function EpisodeList({ episodes }: EpisodeListProps) {
     </div>
   )
 }
-EOF

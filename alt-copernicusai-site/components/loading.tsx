@@ -1,4 +1,3 @@
-cat > copernicusai-site/components/loading.tsx << 'EOF'
 import { Loader2 } from 'lucide-react'
 
 export default function Loading() {
@@ -9,4 +8,3 @@ export default function Loading() {
     </div>
   )
 }
-EOF

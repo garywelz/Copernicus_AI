@@ -1,4 +1,3 @@
-cat > copernicusai-site/lib/spotify.ts << 'EOF'
 const SPOTIFY_API_URL = "https://api.spotify.com/v1"
 
 // Function to get Spotify access token
@@ -38,7 +37,7 @@ async function getAccessToken() {
 }
 
 // Function to search for a podcast by name
-export async function searchSpotifyPodcast(query: string) {
+export async function searchSpotifyPodcast(query) {
   try {
     const token = await getAccessToken()
 
@@ -65,7 +64,7 @@ export async function searchSpotifyPodcast(query: string) {
 }
 
 // Function to fetch podcast data
-export async function getSpotifyPodcast(podcastId: string) {
+export async function getSpotifyPodcast(podcastId) {
   try {
     const token = await getAccessToken()
 
@@ -89,7 +88,7 @@ export async function getSpotifyPodcast(podcastId: string) {
 }
 
 // Function to fetch all podcast episodes
-export async function getSpotifyEpisodes(podcastId: string) {
+export async function getSpotifyEpisodes(podcastId) {
   try {
     const token = await getAccessToken()
     let allEpisodes = []
@@ -130,4 +129,3 @@ export async function getSpotifyEpisodes(podcastId: string) {
     throw error
   }
 }
-EOF

@@ -1,4 +1,3 @@
-cat > copernicusai-site/components/podcast-header.tsx << 'EOF'
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ExternalLink } from 'lucide-react'
@@ -50,4 +49,3 @@ export default function PodcastHeader({ podcast }: PodcastHeaderProps) {
     </div>
   )
 }
-EOF
