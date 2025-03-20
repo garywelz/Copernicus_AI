@@ -1,12 +1,24 @@
+// app/page.tsx
+import PodcastHeader from "@/components/podcast-header"
+
 export default function Home() {
-    return (
-      <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-4">Copernicus AI Podcast</h1>
-        <p className="mb-8">Welcome to the podcast site!</p>
-        
-        <div className="p-4 bg-green-100 rounded-md">
-          <p>This is a simple test page without any component imports.</p>
-        </div>
-      </main>
-    )
+  // Mock data for testing
+  const mockPodcast = {
+    name: "Copernicus AI Podcast",
+    description: "Keeping Current With Engaging AI Podcasts",
+    images: [{ url: "/placeholder.svg?height=300&width=300" }],
+    publisher: "Copernicus AI",
+    total_episodes: 42,
+    external_urls: { spotify: "https://open.spotify.com" }
   }
+
+  return (
+    <main className="container mx-auto px-4 py-8">
+      <PodcastHeader podcast={mockPodcast} />
+      
+      <div className="my-8 p-4 bg-green-100 rounded-md">
+        <p>If you can see this, your podcast header component is working correctly!</p>
+      </div>
+    </main>
+  )
+}
