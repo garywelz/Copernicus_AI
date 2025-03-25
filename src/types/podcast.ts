@@ -1,41 +1,48 @@
 import { VoiceConfig } from './voice';
 
+export type PodcastType = 'research' | 'news';
+
+export type SpeakerRole = 'host' | 'expert' | 'questioner' | 'correspondent';
+
 export interface PodcastSegment {
   title: string;
-  speaker: 'host' | 'expert' | 'questioner';
-  text: string;
-  duration: number;
+  content: string;
+  speaker: SpeakerRole;
+  duration?: number;
+  pauseAfter?: boolean;
 }
 
 export interface PodcastScript {
   title: string;
-  description: string;
-  duration: number;
-  style: string;
-  complexity: string;
-  voices: {
-    host: VoiceConfig;
-    expert: VoiceConfig;
-    questioner: VoiceConfig;
-  };
+  introduction: string;
   segments: PodcastSegment[];
-  references: Reference[];
-}
-
-export interface Reference {
-  title: string;
-  authors: string[];
-  journal: string;
-  date: string;
-  publisher?: string;
-  volume?: string;
-  pages?: string;
+  conclusion: string;
+  references: string[];
+  hashtags: string[];
+  totalDuration?: number;
 }
 
 export interface PodcastOptions {
-  style: 'conversational' | 'narrative' | 'educational';
-  targetDuration: number; // in minutes
-  complexity: 'beginner' | 'intermediate' | 'expert';
+  type: PodcastType;
+  subject: string;
+  targetDuration: number;
+  complexity: 'beginner' | 'intermediate' | 'advanced';
+  style?: 'conversational' | 'formal' | 'educational';
+}
+
+export interface PodcastMetadata {
+  id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  duration: string;
+  date: string;
+  url: string;
+  audioUrl: string;
+  subject: string;
+  type: PodcastType;
+  references: string[];
+  hashtags: string[];
 }
 
 export interface Podcast {
