@@ -285,3 +285,15 @@ yarn-error.log*
 # Generated content
 *.log
 *.cache
+
+# Sensitive files
+*.json
+.env
+.env.*
+!package.json
+!package-lock.json
+!tsconfig.json
+!tsconfig.*.json
+client_secret.json
+service-account.json
+*credentials*.json
