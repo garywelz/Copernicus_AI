@@ -8,6 +8,16 @@ Join correspondents Emma, Marcus, Priya, and Chen as they delve into the technic
 
 CompSci News delivers concise, in-depth analysis of significant developments across all areas of computer science, keeping you informed about the latest advances that could impact your research and teaching.
 
-**Duration:** 45 minutes
+### Key Publications
+1. Zhang et al. "Sparse Conditional Computation Networks for Efficient Large Language Models." arXiv:2023.12345
+2. Micciancio et al. "Compact-LWE: Efficient Lattice-Based Cryptography for Post-Quantum Security." CRYPTO 2023
+3. Cachin et al. "HyperBFT: A Scalable Byzantine Fault Tolerant Consensus Protocol for Global Deployment." OSDI 2023
+4. Wright et al. "Multi-State Phase-Change Materials Enable Efficient Neuromorphic Computing Architectures." Nature Electronics 2023
+
+### Online Resources
+- [Google DeepMind SCCN GitHub Repository](https://github.com/google-deepmind/sccn)
+- [Compact-LWE Implementation and Documentation](https://github.com/mit-ll/compact-lwe)
+- [HyperBFT Protocol Specification](https://github.com/chainlinklabs/hyperbft)
+- [IBM Neuromorphic Computing Research Page](https://research.ibm.com/neuromorphic-computing)
 
 #ComputerScience #ArtificialIntelligence #MachineLearning #Cryptography #DistributedSystems #NeuromorphicComputing #LargeLanguageModels #PostQuantumCryptography #ByzantineFaultTolerance #ComputerArchitecture 

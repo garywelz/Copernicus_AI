@@ -88,9 +88,3 @@ In this episode of Copernicus, host Antoni explores the fascinating and mysterio
 - NASA's Black Hole Guide: https://science.nasa.gov/astrophysics/focus-areas/black-holes
 - Event Horizon Telescope: https://eventhorizontelescope.org/
 - LIGO Scientific Collaboration: https://www.ligo.org/
-
-## Credits
-- Host: Antoni
-- Guests: Dr. Sarah Chen (Astrophysicist) and Dr. Josh Patel (Theoretical Physicist)
-- Producer: Copernicus Science Media
-- Music: Cosmic Soundscapes 

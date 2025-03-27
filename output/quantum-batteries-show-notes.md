@@ -84,8 +84,3 @@ An exploration of the cutting-edge field of quantum batteries, which harness qua
 - **Center for Quantum Technology (Singapore)**: Theoretical developments in quantum thermodynamics
 - **Institute for Quantum Computing (University of Waterloo)**: Hybrid quantum systems research
 - **Scuola Normale Superiore (Pisa)**: Theoretical foundations of quantum batteries
-
-## Technical Notes
-- Audio format: WAV
-- Duration: ~10 minutes
-- Recorded: April 2024 

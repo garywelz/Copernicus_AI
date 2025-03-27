@@ -89,8 +89,3 @@ An exploration of the cutting-edge chemical advances in CRISPR technology that a
 - **Jennifer Doudna Lab (UC Berkeley)**: RNA-targeting CRISPR systems
 - **Feng Zhang Lab (Broad Institute)**: CRISPR delivery and diagnostic applications
 - **Synthetic Biology Institute (MIT)**: Engineered CRISPR control systems
-
-## Technical Notes
-- Audio format: WAV
-- Duration: ~15 minutes
-- Recorded: April 2024 

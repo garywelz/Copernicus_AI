@@ -29,7 +29,7 @@ describe('ArxivService', () => {
         <author><name>Test Author</name></author>
         <published>2024-01-01T00:00:00Z</published>
         <summary>Test summary</summary>
-        <id>http://arxiv.org/abs/1234.5678</id>
+        <id>image.pnghttp://arxiv.org/abs/1234.5678</id>
       </entry>
     </feed>
   `;

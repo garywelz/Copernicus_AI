@@ -27,6 +27,32 @@ google-credentials.json
 *credentials*.json
 *.pem
 *.key
+client_secret.json
+elevenlabs_voices.json
+*secret*.json
+
+# Voice service configuration
+voice_config/
+voice_samples/
+voice_output/
+
+# Generated podcast content
+generated_content/
+podcast_output/
+transcripts/
+
+# Replit specific
+.replit
+replit.nix
+
+# Export/Save artifacts
+Export
+Save
+
+# Temporary dev files
+dev.log
+*.dev.*
+.dev/
 
 # Logs
 logs/

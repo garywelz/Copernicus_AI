@@ -1,0 +1,3 @@
+[submodule "copernicus-web"]
+	path = copernicus-web
+	url = https://github.com/garywelz/copernicus-web.git

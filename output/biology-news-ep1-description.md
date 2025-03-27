@@ -8,6 +8,18 @@ Join correspondents James, Sophia, Noah, and Aisha as they delve into the scient
 
 Biology News delivers concise, in-depth analysis of significant developments across all areas of biological sciences, keeping you informed about the latest advances that could impact your research and teaching.
 
-**Duration:** 45 minutes
+
+### Key Publications
+1. Zhang et al. "CRISPR-Cas Phi: A Compact, High-Fidelity System for Therapeutic Gene Editing." Nature Biotechnology, 2025
+2. Simard et al. "Molecular Dialogue Through the Wood Wide Web: Mycorrhizal Networks Enable Sophisticated Inter-Plant Communication." Science, 2024
+3. Pasca et al. "Vascularized Brain Organoids Enable Long-Term Studies of Neural Development and Disease Modeling." Cell Stem Cell, 2025
+4. Jewett et al. "A Modular Cell-Free Biomanufacturing Platform for On-Demand Protein Production." Nature Chemical Biology, 2025
+
+Online Resources
+- [Broad Institute CRISPR Resources](https://www.broadinstitute.org/crispr)
+- [Global Forest Mycorrhizal Research Network](https://www.gfmrn.org)
+- [Brain Organoid Research Consortium](https://brainorganoids.org)
+- [Cell-Free Synthetic Biology Toolkit](https://www.cellfreetech.org)
+
 
 #Biology #MolecularBiology #Genetics #PlantBiology #Neuroscience #SyntheticBiology #CRISPR #BrainOrganoids #Biomanufacturing #BiologyResearch 

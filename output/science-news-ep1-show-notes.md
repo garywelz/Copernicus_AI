@@ -53,10 +53,3 @@ In this premiere episode of Science News, host Alexandra and correspondents expl
 3. Church, G.M. & Ellis, T. (2023). "Engineered microbial consortia for efficient production of biodegradable polymers from waste feedstocks." *Science*, 380(6648), 1042-1047.
 4. Bloom, J.S. & Graham, M.J. (2023). "Deep learning approaches to astronomical discovery in the era of massive time-domain surveys." *Annual Review of Astronomy and Astrophysics*, 61, 147-176.
 5. National Academies of Sciences, Engineering, and Medicine. (2023). *The Changing Landscape of Federal Science Funding*. National Academies Press.
-
-## Connect With Us
-- Website: sciencenews.podcast.edu
-- Email: feedback@sciencenews.podcast.edu
-- Social Media: @ScienceNewsPod
-
-*Science News is produced by the Science Podcast Network. All papers and research discussed are linked in our show notes with full citations.* 

@@ -28,4 +28,23 @@ Whether you're a chemist interested in supramolecular design, an engineer curiou
 
 Part of the Frontiers of Research podcast series, where complex scientific concepts are made accessible through thoughtful conversation, revealing how the deliberate manipulation of matter at the molecular scale is opening new possibilities for medicine, materials, and computing that were once confined to the realm of science fiction.
 
+
+
+### Key Publications
+1. Sauvage, J.P. (2017). "From Chemical Topology to Molecular Machines." Angewandte Chemie International Edition, 56(37), 11080-11093.
+2. Stoddart, J.F. (2017). "Mechanically Interlocked Molecules (MIMs)—Molecular Shuttles, Switches, and Machines." Angewandte Chemie International Edition, 56(37), 11094-11125.
+3. Feringa, B.L. (2017). "The Art of Building Small: From Molecular Switches to Motors." Angewandte Chemie International Edition, 56(37), 11060-11078.
+4. Erbas-Cakmak, S., Leigh, D.A., McTernan, C.T., & Nussbaumer, A.L. (2015). "Artificial Molecular Machines." Chemical Reviews, 115(18), 10081-10206.
+5. Kassem, S., van Leeuwen, T., Lubbe, A.S., Wilson, M.R., Feringa, B.L., & Leigh, D.A. (2017). "Artificial Molecular Motors." Chemical Society Reviews, 46(9), 2592-2621.
+
+### Online Resources
+- [Molecular Machines: The 2016 Nobel Prize in Chemistry](https://www.nobelprize.org/prizes/chemistry/2016/summary/)
+- [Molecular Machines Research Group at University of Groningen](https://www.rug.nl/research/molecular-machines/)
+- [Center for Integrated Nanotechnologies](https://cint.lanl.gov/)
+
+### Popular Science Books
+- Drexler, K.E. (1986). "Engines of Creation: The Coming Era of Nanotechnology." Anchor Books.
+- Jones, R.A.L. (2004). "Soft Machines: Nanotechnology and Life." Oxford University Press.
+- Browne, W.R., & Feringa, B.L. (2006). "Making Molecular Machines Work." Nature Nanotechnology, 1(1), 25-35. 
+
 #MolecularMachines #Nanotechnology #SupramolecularChemistry #MolecularMotors #Nanoscience #SyntheticChemistry #MolecularEngineering #NobelPrize #DrugDelivery #SmartMaterials #Rotaxanes #Catenanes #MolecularSwitches #BiomimeticChemistry #NanoRobotics 

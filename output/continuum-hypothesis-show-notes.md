@@ -5,11 +5,6 @@
 ## Episode Summary
 An exploration of one of the most profound results in mathematical logic: the discovery that the Continuum Hypothesis can neither be proved nor disproved from the standard axioms of set theory. We follow the journey from Georg Cantor's revolutionary work on infinite sets through Kurt Gödel and Paul Cohen's groundbreaking independence proofs, and explore the philosophical implications for mathematical truth.
 
-## Featured Guests
-- Rachel - Mathematical Logic Expert
-- Josh - Mathematical Historian
-- Antoni - Host
-
 ## Timeline
 00:00 - Introduction and Historical Context
 01:00 - Cantor's Set Theory and Different Sizes of Infinity
@@ -89,8 +84,3 @@ An exploration of one of the most profound results in mathematical logic: the di
 - **David Hilbert (1862-1943)**: Listed the Continuum Hypothesis as the first of his 23 problems
 - **Kurt Gödel (1906-1978)**: Proved the Continuum Hypothesis cannot be disproved from ZFC
 - **Paul Cohen (1934-2007)**: Developed forcing and proved the independence of the Continuum Hypothesis
-
-## Technical Notes
-- Audio format: WAV
-- Duration: ~15 minutes
-- Music transitions at 04:45, 10:00, and 14:30 

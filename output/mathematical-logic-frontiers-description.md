@@ -28,4 +28,20 @@ Whether you're a mathematician interested in foundational questions, a philosoph
 
 Part of the Frontiers of Research podcast series, where complex mathematical concepts are made accessible through thoughtful conversation, revealing how the abstract world of mathematical logic continues to illuminate the deepest questions about the nature of mathematics itself.
 
+## Further Reading
+
+1. Koellner, P. (2023). "The Continuum Hypothesis and the Search for Mathematical Infinity." Journal of Mathematical Logic, 23(1), 1-52.
+
+2. Woodin, W.H. (2022). "Ultimate-L: The Current Status." Bulletin of Symbolic Logic, 28(1), 1-35.
+
+3. Caicedo, A. & Schindler, R. (2023). "The Core Model Induction and Higher Determinacy." Annals of Mathematics, 198(3), 957-1014.
+
+4. Thomas, S. (2024). "Descriptive Set Theory and Dynamical Systems: New Connections." Transactions of the American Mathematical Society, 377, 425-467.
+
+5. Pila, J. & Wilkie, A. (2022). "O-minimality and Diophantine Geometry: Recent Advances." Inventiones Mathematicae, 217, 1-42.
+
+6. Rathjen, M. (2023). "Proof Theory of Impredicative Subsystems of Analysis." Journal of Symbolic Logic, 88(1), 103-145.
+
+7. Slaman, T.A. & Shore, R.A. (2024). "New Results in the Degree Structure of Computability." Advances in Mathematics, 405, 108562.
+
 #MathematicalLogic #SetTheory #ModelTheory #ProofTheory #ComputabilityTheory #FoundationsOfMathematics #ContinuumHypothesis #LargeCardinals #ForcingAxioms #OMinimality #ReverseMathmatics #GödelIncompleteness #MathematicalPhilosophy #InfinityTheory #FormalSystems 

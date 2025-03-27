@@ -6,7 +6,7 @@
 A comprehensive overview of recent breakthroughs in mathematical logic, exploring major developments in set theory, model theory, proof theory, and computability theory. We discuss how these advances are reshaping our understanding of the foundations of mathematics and opening new avenues for research.
 
 ## Featured Guests
-- Dr. Rachel - Mathematical Logic Expert
+- Rachel - Mathematical Logic Expert
 - Josh - Mathematical Historian
 - Antoni - Host
 
@@ -83,8 +83,3 @@ A comprehensive overview of recent breakthroughs in mathematical logic, explorin
 - **Model Theory Group (Paris)**: Applications to algebraic geometry and number theory
 - **Proof Theory Lab (Munich)**: Ordinal analysis and proof mining
 - **Computability Theory Working Group (Chicago)**: Degrees of undecidability and randomness
-
-## Technical Notes
-- Audio format: WAV
-- Duration: ~20 minutes
-- Recorded: March 2024 

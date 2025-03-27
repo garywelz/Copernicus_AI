@@ -6,7 +6,7 @@
 A deep dive into one of mathematics' most famous problems, from Henri Poincaré's initial conjecture in 1904 through its eventual solution by Grigori Perelman in 2002. We explore the deep connections between topology, geometry, and analysis that led to its resolution.
 
 ## Featured Guests
-- Dr. Rachel - Topology Expert
+- Rachel - Topology Expert
 - Josh - Mathematical Historian
 - Antoni - Host
 
@@ -75,8 +75,3 @@ The Science magazine illustration discussed in the podcast shows:
 - Color gradient representing curvature (red = high positive, blue = lower)
 - Dark rings indicating regions of high stress
 - Formation of neck-pinching singularities
-
-## Technical Notes
-- Audio format: WAV
-- Duration: ~25 minutes
-- Recorded: [Current Date] 

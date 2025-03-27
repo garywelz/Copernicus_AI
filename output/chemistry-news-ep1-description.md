@@ -8,6 +8,18 @@ Join correspondents Thomas, Amara, Kai, and Leila as they delve into the scienti
 
 Chemistry News delivers concise, in-depth analysis of significant developments across all areas of chemistry, keeping you informed about the latest advances that could impact your research and teaching.
 
-**Duration:** 45 minutes
+
+Key Publications
+1. Li et al. "Ambient-Condition Direct Methane-to-Methanol Conversion with a Cu-CeO₂ Catalyst." Science, 2025
+2. Patel et al. "Sustainable Polyethylene Alternatives from Agricultural Waste with Tunable Properties." Nature Materials, 2024
+3. Zhang et al. "Accurate Prediction of Protein-Ligand Interactions via Hybrid QM/MM Deep Learning." Nature Methods, 2025
+4. Rodriguez et al. "Single-Molecule Detection in Complex Biological Samples via Plasmonic-Enhanced Stimulated Raman Scattering." Nature Chemistry, 2025
+
+### Online Resources
+- [Catalysis Science & Technology Database](https://www.catalysisdatabase.org)
+- [Sustainable Polymers Consortium](https://www.sustainablepolymers.org)
+- [Open Drug Discovery Toolkit](https://oddt.net)
+- [Single-Molecule Analysis Resource Portal](https://singlemolechem.org)
+
 
 #Chemistry #OrganicChemistry #InorganicChemistry #PhysicalChemistry #AnalyticalChemistry #ComputationalChemistry #Catalysis #SyntheticMethodology #SpectroscopicTechniques #ChemistryResearch 

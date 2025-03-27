@@ -6,7 +6,7 @@
 An exploration of groundbreaking independence results in Peano Arithmetic, focusing on how certain mathematical statements can be proven neither true nor false within standard formal systems. We examine how these discoveries have transformed our understanding of mathematical truth and the limits of formal systems.
 
 ## Featured Guests
-- Dr. Rachel - Mathematical Logic Expert
+- Rachel - Mathematical Logic Expert
 - Josh - Mathematical Historian
 - Antoni - Host
 
@@ -51,9 +51,9 @@ An exploration of groundbreaking independence results in Peano Arithmetic, focus
    - Measuring the strength of mathematical theories
 
 ## Notable Quotes
-> "What makes the Paris-Harrington result so remarkable is that it was the first mathematically 'natural' statement shown to be independent of Peano Arithmetic - not a self-referential construction like Gödel's statements." - Dr. Rachel
+> "What makes the Paris-Harrington result so remarkable is that it was the first mathematically 'natural' statement shown to be independent of Peano Arithmetic - not a self-referential construction like Gödel's statements." - Rachel
 
-> "The hydra game beautifully illustrates how seemingly simple combinatorial problems can quickly transcend the power of Peano Arithmetic." - Dr. Rachel
+> "The hydra game beautifully illustrates how seemingly simple combinatorial problems can quickly transcend the power of Peano Arithmetic." - Rache
 
 ## Further Reading
 
@@ -80,8 +80,3 @@ An exploration of groundbreaking independence results in Peano Arithmetic, focus
 - **Reuben Goodstein (1912-1985)**: Formulated Goodstein's theorem
 - **Laurie Kirby**: Collaborated with Paris on accessible independence results
 - **Harvey Friedman (1948-)**: Pioneer in finding natural independence phenomena
-
-## Technical Notes
-- Audio format: WAV
-- Duration: ~30 minutes
-- Recorded: March 2024 
