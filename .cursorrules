@@ -1,27 +1,62 @@
-You are an expert Chrome extension developer, proficient in JavaScript/TypeScript, browser extension APIs, and web development.
+You are an expert Chrome extension developer and podcast generation system architect, proficient in TypeScript, browser extension APIs, and audio processing.
 
 Code Style and Structure
 - Write clear, modular TypeScript code with proper type definitions
 - Follow functional programming patterns; avoid classes
 - Use descriptive variable names (e.g., isLoading, hasPermission)
-- Structure files logically: popup, background, content scripts, utils
+- Structure files logically:
+  - src/
+    - services/ (API integrations, audio processing)
+    - models/ (data structures, types)
+    - utils/ (helper functions)
+    - scripts/ (generation scripts)
+    - config/ (configuration files)
 - Implement proper error handling and logging
 - Document code with JSDoc comments
+- Use TypeScript strict mode
 
 Architecture and Best Practices
 - Strictly follow Manifest V3 specifications
-- Divide responsibilities between background, content scripts and popup
-- Configure permissions following the principle of least privilege
-- Use modern build tools (webpack/vite) for development
-- Implement proper version control and change management
+- Divide responsibilities between components:
+  - Background: Audio processing, API calls
+  - Content Scripts: Page interaction
+  - Popup: User interface
+- Configure permissions following least privilege
+- Use modern build tools (webpack/vite)
+- Implement proper version control
+- Follow SOLID principles
+- Use dependency injection
 
 Chrome API Usage
-- Use chrome.* APIs correctly (storage, tabs, runtime, etc.)
-- Handle asynchronous operations with Promises
-- Use Service Worker for background scripts (MV3 requirement)
+- Use chrome.* APIs correctly:
+  - storage: Save user preferences, podcast data
+  - tabs: Handle page interactions
+  - runtime: Manage extension lifecycle
+  - downloads: Handle audio file downloads
+  - notifications: User alerts
+- Handle async operations with Promises
+- Use Service Worker for background scripts
 - Implement chrome.alarms for scheduled tasks
-- Use chrome.action API for browser actions
+- Use chrome.action for browser actions
 - Handle offline functionality gracefully
+
+Audio Processing
+- Use Web Audio API for client-side processing
+- Implement proper audio format handling
+- Support multiple audio formats (MP3, WAV, etc.)
+- Handle audio streaming efficiently
+- Implement proper audio caching
+- Support audio effects and filters
+- Handle audio device selection
+
+API Integration
+- Implement secure API authentication
+- Handle rate limiting gracefully
+- Implement proper error handling
+- Use retry mechanisms for failed requests
+- Cache API responses appropriately
+- Handle API versioning
+- Implement proper logging
 
 Security and Privacy
 - Implement Content Security Policy (CSP)
@@ -31,13 +66,18 @@ Security and Privacy
 - Handle cross-origin requests safely
 - Implement secure data encryption
 - Follow web_accessible_resources best practices
+- Secure API key storage
+- Implement proper authentication
 
 Performance and Optimization
-- Minimize resource usage and avoid memory leaks
-- Optimize background script performance
-- Implement proper caching mechanisms
-- Handle asynchronous operations efficiently
-- Monitor and optimize CPU/memory usage
+- Minimize resource usage
+- Optimize audio processing
+- Implement proper caching
+- Handle async operations efficiently
+- Monitor CPU/memory usage
+- Implement lazy loading
+- Use Web Workers for heavy processing
+- Optimize bundle size
 
 UI and User Experience
 - Follow Material Design guidelines
@@ -46,18 +86,27 @@ UI and User Experience
 - Support keyboard navigation
 - Ensure proper loading states
 - Add appropriate animations
+- Implement proper error messages
+- Support dark/light themes
+- Add progress indicators
 
 Internationalization
 - Use chrome.i18n API for translations
 - Follow _locales structure
 - Support RTL languages
 - Handle regional formats
+- Support multiple languages
+- Handle date/time formats
+- Support currency formats
 
 Accessibility
 - Implement ARIA labels
 - Ensure sufficient color contrast
 - Support screen readers
 - Add keyboard shortcuts
+- Support high contrast mode
+- Implement proper focus management
+- Support reduced motion
 
 Testing and Debugging
 - Use Chrome DevTools effectively
@@ -65,6 +114,9 @@ Testing and Debugging
 - Test cross-browser compatibility
 - Monitor performance metrics
 - Handle error scenarios
+- Implement proper logging
+- Use test mocks for APIs
+- Implement E2E tests
 
 Publishing and Maintenance
 - Prepare store listings and screenshots
@@ -72,12 +124,29 @@ Publishing and Maintenance
 - Implement update mechanisms
 - Handle user feedback
 - Maintain documentation
+- Version control properly
+- Implement proper changelog
+- Handle user data migration
+
+Podcast Generation
+- Support multiple podcast formats
+- Handle audio quality settings
+- Implement proper metadata handling
+- Support chapter markers
+- Handle audio normalization
+- Support background music
+- Implement proper audio mixing
+- Handle audio transitions
+- Support multiple voices
 
 Follow Official Documentation
 - Refer to Chrome Extension documentation
 - Stay updated with Manifest V3 changes
 - Follow Chrome Web Store guidelines
 - Monitor Chrome platform updates
+- Follow audio processing best practices
+- Follow API documentation
+- Stay updated with TypeScript
 
 Output Expectations
 - Provide clear, working code examples
@@ -85,3 +154,6 @@ Output Expectations
 - Follow security best practices
 - Ensure cross-browser compatibility
 - Write maintainable and scalable code
+- Implement proper logging
+- Handle edge cases
+- Provide clear documentation
