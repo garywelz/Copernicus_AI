@@ -1,0 +1,93 @@
+{
+  "tiers": {
+    "FREE": {
+      "name": "Free Tier",
+      "description": "Access to public AI-generated science podcasts",
+      "price": 0,
+      "features": [
+        "Access to all public podcasts",
+        "Basic recommendation system",
+        "Limited podcast history (last 10 episodes)",
+        "Standard quality audio"
+      ],
+      "limits": {
+        "customPodcasts": 0,
+        "historyRetention": 10,
+        "audioQuality": "standard"
+      }
+    },
+    "BASIC": {
+      "name": "Basic Plan",
+      "description": "Enhanced access with custom podcast creation",
+      "price": 9.99,
+      "interval": "month",
+      "features": [
+        "All FREE features",
+        "Custom podcast requests (5/month)",
+        "Advanced recommendations",
+        "Ad-free experience",
+        "Full podcast history",
+        "High quality audio"
+      ],
+      "limits": {
+        "customPodcasts": 5,
+        "historyRetention": -1,
+        "audioQuality": "high"
+      }
+    },
+    "PREMIUM": {
+      "name": "Premium Plan",
+      "description": "Ultimate access with unlimited features",
+      "price": 19.99,
+      "interval": "month",
+      "features": [
+        "All BASIC features",
+        "Unlimited custom podcast requests",
+        "Priority processing",
+        "Private podcasts",
+        "API access",
+        "Early access to new features",
+        "Ultra-high quality audio",
+        "Download for offline listening"
+      ],
+      "limits": {
+        "customPodcasts": -1,
+        "historyRetention": -1,
+        "audioQuality": "ultra",
+        "apiAccess": true,
+        "offlineAccess": true
+      }
+    }
+  },
+  "features": {
+    "customPodcasts": {
+      "description": "Create your own AI-generated science podcasts",
+      "tiers": ["BASIC", "PREMIUM"]
+    },
+    "privatePodcasts": {
+      "description": "Keep your custom podcasts private",
+      "tiers": ["PREMIUM"]
+    },
+    "apiAccess": {
+      "description": "Programmatic access to generate podcasts",
+      "tiers": ["PREMIUM"]
+    },
+    "audioQuality": {
+      "standard": {
+        "bitrate": "128kbps",
+        "format": "mp3",
+        "tiers": ["FREE"]
+      },
+      "high": {
+        "bitrate": "256kbps",
+        "format": "mp3",
+        "tiers": ["BASIC"]
+      },
+      "ultra": {
+        "bitrate": "320kbps",
+        "format": "mp3",
+        "tiers": ["PREMIUM"]
+      }
+    }
+  }
+} 

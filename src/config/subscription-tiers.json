@@ -1,0 +1,46 @@
+{
+  "tiers": {
+    "FREE": {
+      "name": "Free",
+      "price": 0,
+      "description": "Perfect for getting started",
+      "features": [
+        "Access to public podcasts",
+        "Basic recommendation system",
+        "Limited podcast history",
+        "Standard audio quality"
+      ]
+    },
+    "BASIC": {
+      "name": "Basic",
+      "price": 9.99,
+      "interval": "month",
+      "description": "For regular listeners",
+      "features": [
+        "All FREE features",
+        "Custom podcast requests (5/month)",
+        "Advanced recommendations",
+        "Ad-free experience",
+        "Full podcast history",
+        "High-quality audio",
+        "Download for offline listening"
+      ]
+    },
+    "PREMIUM": {
+      "name": "Premium",
+      "price": 19.99,
+      "interval": "month",
+      "description": "For power users",
+      "features": [
+        "All BASIC features",
+        "Unlimited custom podcast requests",
+        "Priority processing",
+        "Private podcasts",
+        "API access",
+        "Early access to new features",
+        "Lossless audio quality",
+        "Exclusive content"
+      ]
+    }
+  }
+} 

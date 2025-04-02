@@ -1,62 +1,79 @@
-import { processPaper } from './services/paperProcessor.js';
-import { logger } from './utils/logger.js';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import dotenv from 'dotenv';
+import { ServiceManager } from './services/ServiceManager';
+import { ServiceConfig } from './types/service';
+import { LoggingService } from './services/LoggingService';
+import { ConfigService } from './services/ConfigService';
 
-// Get the directory path of the current module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+/**
+ * Application configuration
+ */
+const appConfig: ServiceConfig = {
+  enabled: true,
+  debug: process.env.NODE_ENV === 'development',
+  timeout: 30000,
+  retries: 3,
+  retryDelay: 1000
+};
 
-// Add debug logging for environment setup
-logger.info('Current directory:', process.cwd());
-logger.info('Module directory:', __dirname);
-logger.info('Env file path:', join(__dirname, '..', '.env'));
-
-// Load environment variables from the root directory
-const envResult = dotenv.config({ path: join(__dirname, '..', '.env') });
-if (envResult.error) {
-  logger.error('Error loading .env:', envResult.error);
-} else {
-  logger.info('Environment variables loaded successfully');
-}
-
-async function main() {
-  try {
-    const apiKey = process.env.OPENROUTER_API_KEY;
-    
-    if (!apiKey) {
-      logger.error('Missing OPENROUTER_API_KEY in environment variables');
-      process.exit(1);
+/**
+ * Service manager configuration
+ */
+const serviceManagerConfig = {
+  ...appConfig,
+  services: {
+    config: {
+      ...appConfig,
+      debug: true // Always enable debug for config service
+    },
+    logging: {
+      ...appConfig,
+      debug: true // Always enable debug for logging service
     }
+  }
+};
 
-    logger.info('Starting with API key:', apiKey.substring(0, 8) + '...');
+/**
+ * Main application entry point
+ */
+async function main() {
+  const serviceManager = new ServiceManager(serviceManagerConfig);
 
-    // Example paper for testing
-    const testPaper = {
-      title: 'Test Paper',
-      authors: ['Test Author'],
-      content: 'This is a test paper about AI and machine learning.',
-      doi: '10.1234/test',
-      publicationDate: '2024-01-01',
-      journal: 'Test Journal'
-    };
+  try {
+    // Initialize service manager
+    await serviceManager.initialize();
 
-    const options = {
-      depth: 'quick' as const,
-      outputFormat: 'summary' as const
-    };
+    // Get services
+    const configService = serviceManager.getService<ConfigService>('config');
+    const loggingService = serviceManager.getService<LoggingService>('logging');
 
-    logger.info('Starting paper analysis...');
-    const analysis = await processPaper(testPaper, options, apiKey);
-    logger.info('Analysis complete:', analysis);
+    // Log application startup
+    loggingService.info('Copernicus AI application started', {
+      environment: process.env.NODE_ENV,
+      version: process.env.npm_package_version
+    });
+
+    // TODO: Initialize additional services and start application logic
+
+    // Handle graceful shutdown
+    process.on('SIGTERM', async () => {
+      loggingService.info('Received SIGTERM signal, initiating graceful shutdown');
+      await serviceManager.cleanup();
+      process.exit(0);
+    });
+
+    process.on('SIGINT', async () => {
+      loggingService.info('Received SIGINT signal, initiating graceful shutdown');
+      await serviceManager.cleanup();
+      process.exit(0);
+    });
+
   } catch (error) {
-    logger.error('Error in main:', error);
+    console.error('Failed to start application:', error);
     process.exit(1);
   }
 }
 
+// Start the application
 main().catch(error => {
-  logger.error('Unhandled error:', error);
+  console.error('Unhandled error:', error);
   process.exit(1);
 }); 

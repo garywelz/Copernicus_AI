@@ -1,0 +1,86 @@
+// This is your Prisma schema file
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String            @id @default(uuid())
+  email            String            @unique
+  password         String
+  name             String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  stripeCustomerId String?          @unique
+  subscription     Subscription?
+  podcastHistory   PodcastHistory[]
+  preferences      UserPreferences?
+  podcastRequests  PodcastRequest[]
+}
+
+model Subscription {
+  id                  String   @id @default(uuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id])
+  tier                String   // FREE, BASIC, PREMIUM
+  status              String   // ACTIVE, EXPIRED, CANCELLED
+  stripeSubscriptionId String? @unique
+  validUntil          DateTime
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model PodcastHistory {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  podcastId  String
+  podcast    Podcast  @relation(fields: [podcastId], references: [id])
+  progress   Float    // Percentage listened
+  listenedAt DateTime @default(now())
+
+  @@unique([userId, podcastId])
+}
+
+model UserPreferences {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id])
+  subjects           String[] // Array of subject IDs
+  notificationEnabled Boolean  @default(true)
+  privateByDefault    Boolean  @default(false)
+  language           String   @default("en")
+  updatedAt          DateTime @updatedAt
+}
+
+model Podcast {
+  id            String           @id @default(uuid())
+  title         String
+  description   String
+  audioUrl      String
+  thumbnailUrl  String?
+  duration      Int              // Duration in seconds
+  subject       String
+  isPrivate     Boolean          @default(false)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  history       PodcastHistory[]
+  requestId     String?          @unique
+  request       PodcastRequest?  @relation(fields: [requestId], references: [id])
+}
+
+model PodcastRequest {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  prompt    String
+  status    String    // PENDING, PROCESSING, COMPLETED, FAILED
+  isPrivate Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  podcast   Podcast?
+} 

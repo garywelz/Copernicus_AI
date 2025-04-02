@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "youtube:test": "ts-node testYouTubeUpload.ts",
-    "youtube:token": "ts-node getYouTubeToken.ts",
-    "twitter:test": "ts-node testTwitterShare.ts"
+    "youtube:token": "ts-node scripts/youtube/getYouTubeToken.ts",
+    "youtube:test": "ts-node scripts/youtube/testYouTubeUpload.ts",
+    "twitter:test": "ts-node scripts/twitter/testTwitterShare.ts",
+    "twitter:simple": "ts-node scripts/twitter/testSimpleTweet.ts",
+    "podcast:generate": "ts-node scripts/podcast/generatePodcast.ts",
+    "podcast:blackholes": "ts-node scripts/podcast/generateBlackHolesPodcast.ts",
+    "descript:test": "ts-node scripts/descript/testDescriptUpload.ts"
   },
   "dependencies": {
     "googleapis": "^144.0.0",

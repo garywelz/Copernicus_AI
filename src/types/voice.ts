@@ -1,54 +1,49 @@
-export interface VoiceSettings {
-  stability: number;
-  similarity_boost: number;
-  style: number;
-  use_speaker_boost: boolean;
-  volume: number;
-}
+import type { AudioSegment, AudioResult, AudioProcessingOptions } from './audio';
 
-export interface VoiceSynthesisOptions {
-  model: string;
-  speed?: number;
-  settings?: VoiceSettings;
+export type VoiceProvider = 'google' | 'openai';
+
+export interface VoiceSettings {
+  language_code?: string;
+  name?: string;
+  ssml_gender?: 'MALE' | 'FEMALE' | 'NEUTRAL';
+  model?: string;
+  voice?: string;
+  pitch?: number;
+  rate?: number;
+  volume?: number;
+  language?: string;
+  gender?: 'male' | 'female';
 }
 
 export interface VoiceConfig {
-  role: string;
-  model: 'tts-1' | 'tts-1-hd';
-  voice: 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer';
-  speed: number;
+  host: VoiceSettings;
+  expert: VoiceSettings;
+  questioner: VoiceSettings;
+  voiceId: string;
+  settings: VoiceSettings;
+  processingOptions?: AudioProcessingOptions;
 }
 
-export interface VoiceOptions {
-  host: VoiceConfig;
-  expert: VoiceConfig;
-  questioner: VoiceConfig;
-  correspondent: VoiceConfig;
+export interface AudioSegment {
+  duration: number;
+  export(outputPath: string): Promise<void>;
 }
 
-export const DEFAULT_VOICES: VoiceOptions = {
-  host: {
-    role: 'Main host and narrator',
-    model: 'tts-1-hd',
-    voice: 'nova',
-    speed: 1.0
-  },
-  expert: {
-    role: 'Subject matter expert',
-    model: 'tts-1',
-    voice: 'onyx',
-    speed: 0.95
-  },
-  questioner: {
-    role: 'Asks clarifying questions',
-    model: 'tts-1',
-    voice: 'echo',
-    speed: 0.98
-  },
-  correspondent: {
-    role: 'News correspondent',
-    model: 'tts-1',
-    voice: 'shimmer',
-    speed: 1.0
-  }
-}; 
+export interface AudioResult {
+  duration: number;
+  url: string;
+  metadata?: Record<string, any>;
+}
+
+export interface VoiceSynthesisOptions {
+  text: string;
+  voiceConfig: VoiceConfig;
+  format?: string;
+  sampleRate?: number;
+  channels?: number;
+}
+
+export interface IVoiceService {
+  synthesize(text: string, options: VoiceSynthesisOptions): Promise<AudioSegment>;
+  combineAudioSegments(segments: AudioSegment[], outputPath?: string, pauseDuration?: number): Promise<AudioResult>;
+} 

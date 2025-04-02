@@ -1,7 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.placeholder-active {
-  @apply bg-gradient-to-br from-blue-500 to-purple-600;
-} 

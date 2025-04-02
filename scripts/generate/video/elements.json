@@ -1,0 +1,16 @@
+{
+  "elements": [
+    {
+      "type": "text",
+      "content": "Black Holes: The Cosmic Mysteries",
+      "startTime": 0,
+      "duration": 5,
+      "style": {
+        "fontSize": 60,
+        "textColor": "white",
+        "backgroundColor": null,
+        "position": "center"
+      }
+    }
+  ]
+} 
