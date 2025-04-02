@@ -40,3 +40,10 @@ venv/
 archive/old_code.tar.gz
 *.so
 ffmpeg-*
+
+# Allow TypeScript files
+!src/
+!tsconfig.json
+!.eslintrc.json
+!package.json
+!package-lock.json
