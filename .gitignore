@@ -1,2 +1,42 @@
-# Dependencies\nnode_modules/\nnpm-debug.log*\nyarn-debug.log*\nyarn-error.log*\n\n# Environment variables\n.env\n.env.local\n.env.*.local\n\n# Build output\ndist/\nbuild/\n*.tsbuildinfo\n\n# IDE and editor files\n.idea/\n.vscode/\n*.swp\n*.swo\n.DS_Store\n\n# Project specific\noutput/\ncache/\ntemp/\n*.log\ngoogle-credentials.json\n\n# Test coverage\ncoverage/\n\n# Temporary files\n*.tmp\n*.temp
-node_modules
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Project specific
+output/
+cache/
+temp/
+*.log
+google-credentials.json
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Large files
+venv/
+archive/old_code.tar.gz
+*.so
+ffmpeg-*
